@@ -16,10 +16,11 @@ def get_download_link(df):
 
 def main():
     st.title("AI Assisted Audit")
+    eli_data = st.file_uploader("Choose eli_data", type=["xlsx"])
 
     # File Upload
     uploaded_file = st.file_uploader("Choose an Excel file to run checks on", type=["xlsx"])
-
+    
     if uploaded_file is not None:
         # Display uploaded file details
         st.write("Uploaded file details:")
@@ -27,7 +28,7 @@ def main():
         st.write(file_details)
 
         # Process the data
-        processed_data = process_excel(uploaded_file)
+        processed_data = process_excel(uploaded_file, eli_data)
 
         # Display the processed data
         st.write("Processed Data:")

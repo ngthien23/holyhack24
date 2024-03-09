@@ -16,11 +16,12 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 from nltk.tokenize import word_tokenize
 from nltk.stem import SnowballStemmer
-
+import nltk
+nltk.download('punkt')
 
 vectorizer = TfidfVectorizer(stop_words='english')
 
-def process_excel(uploaded_file):
+def process_excel(uploaded_file, eli_data):
 
     # Read the Excel file into a pandas DataFrame
     df = pd.read_excel(uploaded_file)
@@ -169,7 +170,6 @@ def process_excel(uploaded_file):
     df = pd.concat([df2, df_category_1], ignore_index=True)
     
     # Eligible check
-    eli_data = st.file_uploader("Choose eli_data", type=["xlsx"])
     df_eli = pd.read_excel(eli_data)
 
     # Split the data into training and testing sets
