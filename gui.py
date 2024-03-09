@@ -1,11 +1,8 @@
-# streamlit_app.py
-
 import streamlit as st
 from process_excel import process_excel
 import base64
 import io
 import pandas as pd
-import xlsxwriter
 
 def get_download_link(df):
     # Generate a link to download the processed data as an Excel file
@@ -18,10 +15,10 @@ def get_download_link(df):
     return href
 
 def main():
-    st.title("Excel Processing App")
+    st.title("AI Assisted Audit")
 
     # File Upload
-    uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
+    uploaded_file = st.file_uploader("Choose an Excel file to run checks on", type=["xlsx"])
 
     if uploaded_file is not None:
         # Display uploaded file details

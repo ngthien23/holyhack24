@@ -12,6 +12,9 @@ from nltk import word_tokenize
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+classifier = joblib.load('text_classifier_model.joblib')
+vectorizer = TfidfVectorizer(stop_words='english')
+
 def process_excel(uploaded_file):
 
     # Read the Excel file into a pandas DataFrame
@@ -57,20 +60,41 @@ def process_excel(uploaded_file):
 
     # Calculate the time difference and create a new column 'timediff'
     df['pred.late'] = (df['DECLARATIEDATUM (can be assumed to be close to payment date)'] - df['latest']).dt.days > 0
-    df['pred.late'] = df['pred.late'].astype(int)
+    df['Predicted Late Entries'] = df['pred.late'].astype(int)
 
     # Equality check
-    df['pred.amount'] = (df['BETAALD BEDRAG - extracted from invoice'] - df['BETAALD BEDRAG - declared ']).apply(lambda x: 1 if x < 0 else 0)
-    df['pred.supplier'] = (df['LEVERANCIER - EXTRACTED'] != df['LEVERANCIER - DECLARED']).astype(int)
-    df['pred.date'] = (df['DATUM FACTUUR - extracted'] != df['DATUM FACTUUR - DECLARED']).astype(int)
+    df['Predicted Cost Mismatch'] = (df['BETAALD BEDRAG - extracted from invoice'] - df['BETAALD BEDRAG - declared ']).apply(lambda x: 1 if x < 0 else 0)
+    df['Predicted Supplier Mismatch'] = (df['LEVERANCIER - EXTRACTED'] != df['LEVERANCIER - DECLARED']).astype(int)
+    df['Predicted Date Mismatch'] = (df['DATUM FACTUUR - extracted'] != df['DATUM FACTUUR - DECLARED']).astype(int)
 
     # Model 1
-    #classifier = joblib.load('text_classifier_model.joblib')
-    #X_new = df['BESCHRIJVING DECLARATIE']
-    #vectorizer = TfidfVectorizer(stop_words='english')
-    #X_new_tfidf = vectorizer.transform(X_new)
-    #predictions_new = classifier.predict(X_new_tfidf)
-    #df['category.pred'] = predictions_new
+
+    # # Filter rows where "category" column has value 0
+    # df = df[df['category'] == 0]
+
+    # # Save the filtered DataFrame to a CSV file
+    # df.to_csv('cat_data.csv', index=False)
+
+    # # Train model on positive targets
+    # X = df['BESCHRIJVING DECLARATIE']
+    # y = df['KOSTENRUBRIEK - declared']
+
+    # # Split the dataset into training and testing sets
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # # Vectorize the text data using TF-IDF
+    # vectorizer = TfidfVectorizer(stop_words='english')
+    # X_train_tfidf = vectorizer.fit_transform(X_train) 
+    # X_test_tfidf = vectorizer.transform(X_test)
+
+    # # Train a Multinomial Naive Bayes classifier
+    # classifier = MultinomialNB()
+    # fitted = classifier.fit(X_train_tfidf, y_train)
+
+    # # Make predictions on the test set
+    # predictions = classifier.predict(X_test_tfidf)
+
+    # df['category.pred'] = predictions
 
     return df
 
