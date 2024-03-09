@@ -18,17 +18,17 @@ def clean_message(message_list):
 def lever_equals(x,y):
     if x==y:
         return 0
-    x=re.sub(r'[^\w\s]','',x)
-    y=re.sub(r'[^\w\s]','',y)
+    x=re.sub(r'[^\w\s]',' ',x)
+    y=re.sub(r'[^\w\s]',' ',y)
     split_x=clean_message(word_tokenize(x.lower()))
     split_y=clean_message(word_tokenize(y.lower()))
-    
+    print(split_x,split_y)
     if len(split_x)==len(split_y):
         for i in range(len(split_x)):
             if split_x[i][0]!=split_y[i][0]:
                 return 1
         return 0
-    else:
+    elif len(split_x)!=0 and len(split_y)!=0:
         mini=min(len(split_x),len(split_y))
         for i in range(mini):
             if split_x[i]!=split_y[i]:
