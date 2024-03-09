@@ -9,7 +9,7 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 
 s=set(stopwords.words("english"))
-df = pd.read_excel("costlines-20180101-20221231-v2.xlsx")
+df = pd.read_excel("dataset-v2.xlsx")
 print(df["BESCHRIJVING DECLARATIE"])
 
 
