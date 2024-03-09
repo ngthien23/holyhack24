@@ -169,6 +169,7 @@ def process_excel(uploaded_file):
     df = pd.concat([df2, df_category_1], ignore_index=True)
     
     # Eligible check
+    eli_data = st.file_uploader("Choose eli_data", type=["xlsx"])
     df_eli = pd.read_excel(eli_data)
 
     # Split the data into training and testing sets

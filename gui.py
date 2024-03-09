@@ -18,7 +18,6 @@ def main():
     st.title("AI Assisted Audit")
 
     # File Upload
-    eli_data = st.file_uploader("Choose eli_data", type=["xlsx"])
     uploaded_file = st.file_uploader("Choose an Excel file to run checks on", type=["xlsx"])
 
     if uploaded_file is not None:
