@@ -16,9 +16,20 @@ def main():
         file_details = {"Filename": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
         st.write(file_details)
 
-        # Process the data
-        processed_data = process_excel(uploaded_file)
-        
+        # Process the data based on user choice
+        process_choice = st.selectbox("Choose a process:", ["Process 1", "Process 2", "Process 3", "Process 4", "Process 5"])
+
+        processes = {
+            "Process 1": process_data_1,
+            "Process 2": process_data_2,
+            "Process 3": process_data_3,
+            "Process 4": process_data_4,
+            "Process 5": process_data_5,
+        }
+
+        # Apply the selected process
+        processed_data = processes[process_choice](process_excel(uploaded_file))
+
         # Display the processed data
         st.write("Processed Data:")
         st.write(processed_data)
