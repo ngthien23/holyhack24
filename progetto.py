@@ -58,4 +58,4 @@ print(classification_report(y_test, y_pred))
 ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 plt.show()
 
-print(y_pred,X_test)
+#print(y_pred,X_test)
