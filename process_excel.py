@@ -65,12 +65,12 @@ def process_excel(uploaded_file):
     df['pred.date'] = (df['DATUM FACTUUR - extracted'] != df['DATUM FACTUUR - DECLARED']).astype(int)
 
     # Model 1
-    classifier = joblib.load('text_classifier_model.joblib')
-    X_new = df['BESCHRIJVING DECLARATIE']
-    vectorizer = TfidfVectorizer(stop_words='english')
-    X_new_tfidf = vectorizer.transform(X_new)
-    predictions_new = classifier.predict(X_new_tfidf)
-    df['category.pred'] = predictions_new
+    #classifier = joblib.load('text_classifier_model.joblib')
+    #X_new = df['BESCHRIJVING DECLARATIE']
+    #vectorizer = TfidfVectorizer(stop_words='english')
+    #X_new_tfidf = vectorizer.transform(X_new)
+    #predictions_new = classifier.predict(X_new_tfidf)
+    #df['category.pred'] = predictions_new
 
     return df
 

@@ -3,11 +3,17 @@
 import streamlit as st
 from process_excel import process_excel
 import base64
+import io
+import pandas as pd
+import xlsxwriter
 
 def get_download_link(df):
     # Generate a link to download the processed data as an Excel file
-    csv = df.to_excel(index=False, encoding='utf-8', header=True)
-    b64 = base64.b64encode(csv.encode()).decode()  # Convert to base64 encoding
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+    output.seek(0)
+    b64 = base64.b64encode(output.read()).decode()
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="processed_data.xlsx">Download Excel File</a>'
     return href
 
@@ -25,10 +31,6 @@ def main():
 
         # Process the data
         processed_data = process_excel(uploaded_file)
-        
-        # Display the processed data
-        st.write("Processed Data:")
-        st.write(processed_data)
 
         # Display the processed data
         st.write("Processed Data:")
