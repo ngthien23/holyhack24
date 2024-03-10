@@ -1,5 +1,5 @@
 import streamlit as st
-from process_excel import process_excel
+from process_data import process_excel
 import base64
 import io
 import pandas as pd
